@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "version": "2.3.8",
   "private": true,
   "eslintConfig": {
     "extends": "@trevorblades/eslint-config/react"

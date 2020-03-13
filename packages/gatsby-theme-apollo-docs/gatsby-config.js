@@ -10,30 +10,30 @@ module.exports = ({
   twitterHandle
 }) => {
   const gatsbyRemarkPlugins = [
-    'gatsby-remark-autolink-headers',
+    "gatsby-remark-autolink-headers",
     {
-      resolve: 'gatsby-remark-copy-linked-files',
+      resolve: "gatsby-remark-copy-linked-files",
       options: {
         ignoreFileExtensions: []
       }
     },
-    'gatsby-remark-prismjs-title',
+    "gatsby-remark-prismjs-title",
     {
-      resolve: 'gatsby-remark-prismjs',
+      resolve: "gatsby-remark-prismjs",
       options: {
         showLineNumbers: true
       }
     },
-    'gatsby-remark-rewrite-relative-links',
+    "gatsby-remark-rewrite-relative-links",
     {
-      resolve: 'gatsby-remark-check-links',
+      resolve: "gatsby-remark-check-links",
       options: checkLinksOptions
     }
   ];
 
   return {
     siteMetadata: {
-      title: 'Apollo GraphQL Docs',
+      title: "Apollo GraphQL Docs",
       siteName,
       subtitle,
       description,
@@ -41,52 +41,59 @@ module.exports = ({
     },
     plugins: [
       {
-        resolve: 'gatsby-theme-apollo-core',
+        resolve: "gatsby-theme-apollo-core",
         options: {
           root
         }
       },
       {
-        resolve: 'gatsby-source-filesystem',
+        resolve: "gatsby-source-filesystem",
         options: {
           path: `${root}/source`,
-          name: 'docs'
+          name: "docs"
         }
       },
       {
-        resolve: 'gatsby-transformer-remark',
+        resolve: "gatsby-transformer-remark",
         options: {
           plugins: gatsbyRemarkPlugins
         }
       },
       {
-        resolve: 'gatsby-plugin-google-analytics',
+        resolve: "gatsby-plugin-google-analytics",
         options: {
           trackingId
         }
       },
       {
-        resolve: 'gatsby-plugin-mdx',
+        resolve: "gatsby-plugin-mdx",
         options: {
           gatsbyRemarkPlugins: [
             {
-              resolve: 'gatsby-remark-typescript',
+              resolve: "gatsby-remark-typescript",
               options: {
-                wrapperComponent: 'MultiCodeBlock'
+                wrapperComponent: "MultiCodeBlock"
               }
             },
             ...gatsbyRemarkPlugins
           ]
         }
       },
-      'gatsby-plugin-printer',
+      {
+        resolve: `gatsby-plugin-printer`,
+        options: {
+          puppeteerLaunchOptions: {
+            headless: true
+          }
+        }
+      },
       ...Object.keys(versions).map(key => ({
-        resolve: 'gatsby-source-git',
+        resolve: "gatsby-source-git",
         options: {
           name: key,
           remote: `https://github.com/${githubRepo}`,
           branch: versions[key],
-          patterns: 'docs/**'
+          patterns: "docs/**"
         }
       }))
     ]
